@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Ninja$Bet</title>
+  <style>
+    
+  </style>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./js/ninja.js"></script>
+  <script src="../../socket.io/socket.io.js"></script>
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+
+<body>
+  <div class="wall">
+  <div class="container">
+    <div class="backgroundIMG">
+      <div id="ninjas">
+        <div id="ninja1" class="ninja right1"></div>
+        <div id="ninja2" class="ninja right1"></div>
+        <div id="ninja3" class="ninja right1"></div>
+        <div id="ninja4" class="ninja right1"></div>
+      </div>
+    </div>
+  </div>
+  <div class="bet_area">
+    <div class="chat">
+      <ul id="messages"></ul>
+      <form action="/" method="POST" id="chatForm">
+        <input id="txt" autocomplete="off" autofocus="on"
+          placeholder="type your message here..." /><button>Send</button>
+      </form>
+    </div>
+    <div class="bets">
+      <form action="/" id="bet_form">
+        <div class="row">
+          <span>Money:</span><input type="number" disabled class="available_money" id="bet_current_funds" value="100">
+        </div>
+        <div class="row">
+          <span>Bet amount:</span>
+          <input type="number" id="bet_amount">
+        </div>
+        <div class="row">
+          <span>Choose Ninja:</span>
+          <select id="bet_horse">
+            <option value="horse_1">Ninja 1</option>
+            <option value="horse_2">Ninja 2</option>
+            <option value="horse_3">Ninja 3</option>
+            <option value="horse_4">Ninja 4</option>
+          </select>
+          <div class="row">
+            <button>Make a bet</button>
+          </div>
+      </form>
+    </div>
+  </div>
+  <div class="race_result">
+    <table id="race_table">
+      <thead>
+        <tr>
+          <td>Player</td>
+          <td>Ninja 1</td>
+          <td>Ninja 2</td>
+          <td>Ninja 3</td>
+          <td>Ninja 4</td>
+        </tr>
+      </thead>
+      <tbody id="odds">
+      </tbody>
+    </table>
+  </div>
+  </div>
+  <script>
+    var socket = io();
+
+    // submit text message without reload/refresh the page
+    $('#chatForm').submit(function (e) {
+      if ($('#txt').val()) {
+        e.preventDefault(); // prevents page reloading
+        socket.emit('chat_message', $('#txt').val());
+        $('#txt').val('');
+      }
+      return false;
+    });
+    //make a bet
+    $('#bet_form').submit(function (e) {
+      e.preventDefault();
+      let selected_horse = $('#bet_horse').val();
+      let bet_amount = $('#bet_amount').val();
+      let current_fund = $('#bet_current_funds').val();
+      if (parseInt(bet_amount) <= parseInt(current_fund)) {
+        socket.emit('incoming_bet', { bet_amount: bet_amount, selected_horse: selected_horse });
+        $('#bet_current_funds').attr('value', current_fund - bet_amount);
+        $('#bet_amount').val('')
+      }
+      return false;
+    });
+
+    // append the chat text message
+    socket.on('chat_message', function (msg) {
+      $('#messages').prepend($('<li>').html(msg));
+
+    });
+
+    // append text if someone is online
+    socket.on('is_online', function (data) {
+      $('#messages').append($('<li>').html('🔵 <i>' + data.user_name + ' join the chat..</i>'));
+      makeTable(data.all_users);
+    });
+    socket.on('is_left', function (data) {
+      $('#messages').append($('<li>').html('🔴 <i>' + data.user_name + ' left the chat..</i>'));
+      makeTable(data.all_users);
+    });
+    socket.on('change_bet_table', function (data) {
+      makeTable(data);
+    });
+    // ask username
+    var username = prompt('Please tell me your name');
+    socket.emit('username', username);
+
+    function makeTable(all_users) {
+      let total = [0, 0, 0, 0];
+      $('#race_table tbody').empty();
+      for (let user of all_users) {
+        $('#odds').append($('<tr>').html('<td>' + user.name + '</td><td>' + user.horse_1 + '</td><td>' + user.horse_2 + '</td><td>' + user.horse_3 + '</td><td>' + user.horse_4 + '</td>'));
+      }
+    }
+    socket.on('test', function (data) {
+      console.log(data);
+    });
+    
+    //CREATE NINJAS
+    let n = new Ninja('ninja1', 75, 1);
+    let n2 = new Ninja('ninja2', 80, 1);
+    let n3 = new Ninja('ninja3', 85, 1);
+    let n4 = new Ninja('ninja4', 90, 1);
+    // MAKE THEM RUN!111111
+    n.run();
+    n2.run();
+    n3.run();
+    n4.run();
+
+
+
+  </script>
+</body>
+
+</html>

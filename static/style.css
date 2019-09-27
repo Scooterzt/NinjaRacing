@@ -1,0 +1,171 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  form {
+    background-image: linear-gradient(white, lightgrey);
+    bottom: 0;
+    width: 100%;
+    border-color: #000;
+  }
+
+  input {
+      width: 100%;
+      padding: 10px 15px;
+      margin: 1px 0;
+      box-sizing: border-box;
+      background-image: linear-gradient(white, lightgrey);
+  }
+
+  button {
+    display: inline-block;
+    margin: 3px;
+    width: 100%;
+    padding: 3px 7px;
+    font-size: 10px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background-color: rgb(145, 27, 7);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 9px #999;
+  }
+  button:hover {background-color: #3e8e41}
+  
+  button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+  select{
+    height: 25px;
+  }
+  #messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 100px;
+    overflow: auto;
+  }
+
+  #messages li {
+    padding: 5px 10px;
+  }
+
+  #messages li:nth-child(odd) {
+    background: #eee;
+  }
+
+  .bet_area {
+    display: inline-block;
+    background-image: linear-gradient(white, lightgrey);
+    width: 60%;
+    height: 30%;
+    padding: 10px;
+    margin-left: 20%;
+    margin-top: 18%;
+    border-radius: 15px;
+  }
+
+  .chat {
+    display: inline-block;
+    width: 35%;
+    height: 100%;
+    padding: 10px;
+    vertical-align: center;
+    background-image: linear-gradient(white, lightgrey);
+  }
+
+  .bets {
+    display: inline-block;
+    width: 20%;
+    height: 100%;
+    margin: 1%;
+    padding: 10px;
+    vertical-align: center;
+  }
+
+  .race_result {
+    display: inline-block;
+    width: 35%;
+    height: 100%;
+    margin: 1%;
+    vertical-align: top;
+    overflow: scroll;
+  }
+
+  .row {
+    display: block;
+    width: 100%;
+  }
+
+  .ninja {
+    position: absolute;
+    width: 59px;
+    height: 86px;
+  }
+
+  .right1 {
+    background-image: url('./img/right1.png');
+  }
+
+  .right2 {
+    background-image: url('./img/right2.png');
+  }
+
+  .top1 {
+    background-image: url('./img/top1.png');
+  }
+
+  .top2 {
+    background-image: url('./img/top2.png');
+  }
+
+  .left1 {
+    background-image: url('./img/left1.png');
+  }
+
+  .left2 {
+    background-image: url('./img/left2.png');
+  }
+
+  .down1 {
+    background-image: url('./img/down1.png');
+  }
+
+  .down2 {
+    background-image: url('./img/down2.png');
+  }
+
+  html { 
+    background: url('/img/background.png') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+#race_table {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#race_table td, #race_table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#race_table tr:nth-child(even){background-color: #f2f2f2;}
+
+#race_table tr:hover {background-color: #ddd;}
+
+#race_table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
